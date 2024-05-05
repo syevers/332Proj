@@ -1,0 +1,64 @@
+<?php
+require_once 'db_connection.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve form data
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+
+    // Check user credentials
+    $sql = "SELECT * FROM User WHERE Email = '$email' AND Password = '$password'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows == 1) {
+        // User logged in successfully
+        session_start();
+        $_SESSION["email"] = $email;
+        header("Location: dashboard.php");
+        exit();
+    } else {
+        $error = "Invalid email or password.";
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - AEM</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Academic Event Management</h1>
+        <nav>
+            <ul>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="events.php">Events</a></li>
+                <li><a href="login.php">Login</a></li>
+                <li><a href="register.php">Register</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Login</h2>
+        <?php if (isset($error)) { ?>
+            <p style="color: red;"><?php echo $error; ?></p>
+        <?php } ?>
+        <form action="login.php" method="POST">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Academic Event Management. All rights reserved.</p>
+    </footer>
+</body>
+</html>
