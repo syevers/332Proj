@@ -1,6 +1,8 @@
 <?php
 require_once 'db_connection.php';
 
+session_start();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
     $email = $_POST["email"];
@@ -12,16 +14,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result->num_rows == 1) {
         // User logged in successfully
-        session_start();
-        $_SESSION["email"] = $email;
+        $user = $result->fetch_assoc();
+        $_SESSION["user_id"] = $user['User_ID'];
+        $_SESSION["f_name"] = $user['F_Name'];
+        $_SESSION["role"] = $user['Role'];
+
         header("Location: dashboard.php");
         exit();
     } else {
         $error = "Invalid email or password.";
+        error_log("Login failed for email: $email");
     }
+} else {
+    error_log("Invalid request method: " . $_SERVER["REQUEST_METHOD"]);
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,20 +38,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <header>
         <h1>Academic Event Management</h1>
-        <nav>
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="events.php">Events</a></li>
-                <li><a href="login.php">Login</a></li>
-                <li><a href="register.php">Register</a></li>
-            </ul>
-        </nav>
+            <nav class="navbar">
+                <ul class="navbar-left">
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="events.php">Events</a></li>
+                </ul>
+
+                <ul class="navbar-right">
+                    <li><a href="login.php">Login</a></li>
+                    <li><a href="register.php">Register</a></li>
+                </ul>
+            </nav>
     </header>
 
     <main>
         <h2>Login</h2>
         <?php if (isset($error)) { ?>
-            <p style="color: red;"><?php echo $error; ?></p>
+            <p class="error"><?php echo $error; ?></p>
         <?php } ?>
         <form action="login.php" method="POST">
             <label for="email">Email:</label>

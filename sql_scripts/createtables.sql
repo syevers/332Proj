@@ -9,27 +9,28 @@ USE AEM;
 
 -- Create tables
 CREATE TABLE IF NOT EXISTS U (
-    U_ID INT PRIMARY KEY,
+    U_ID INT PRIMARY KEY AUTO_INCREMENT,
     U_Name VARCHAR(255),
     Created_At DATETIME
 );
 
 CREATE TABLE IF NOT EXISTS Location (
-    Location_ID INT PRIMARY KEY,
+    Location_ID INT PRIMARY KEY AUTO_INCREMENT,
     Venue VARCHAR(255),
+    Street_Address VARCHAR(255),
     City VARCHAR(255),
     State VARCHAR(255),
     Zip_Code VARCHAR(10)
 );
 
 CREATE TABLE IF NOT EXISTS Event_Type (
-    Event_Type_ID INT PRIMARY KEY,
+    Event_Type_ID INT PRIMARY KEY AUTO_INCREMENT,
     Type_Name VARCHAR(255),
     Created_At DATETIME
 );
 
 CREATE TABLE IF NOT EXISTS `Event` (
-    Event_ID INT PRIMARY KEY,
+    Event_ID INT PRIMARY KEY AUTO_INCREMENT,
     Event_Type_ID INT,
     Location_ID INT,
     U_ID INT,
@@ -38,11 +39,11 @@ CREATE TABLE IF NOT EXISTS `Event` (
     Max_Capacity INT,
     Presenter_Deadline DATETIME,
     Event_Name VARCHAR(255),
-    Venue VARCHAR(255),
     F_Date_Time DATETIME,
     Created_At DATETIME,
     Is_Published BOOLEAN,
     Description TEXT,
+    Status ENUM('Open', 'Full', 'Cancelled') DEFAULT 'Open',
     FOREIGN KEY (Event_Type_ID) REFERENCES Event_Type(Event_Type_ID),
     FOREIGN KEY (Location_ID) REFERENCES Location(Location_ID),
     FOREIGN KEY (U_ID) REFERENCES U(U_ID)
@@ -60,19 +61,19 @@ CREATE TABLE IF NOT EXISTS User (
 );
 
 CREATE TABLE IF NOT EXISTS Presenter (
-    Presenter_ID INT PRIMARY KEY,
+    Presenter_ID INT PRIMARY KEY AUTO_INCREMENT,
     Presenter_Name VARCHAR(255),
     Create_At DATETIME
 );
 
 CREATE TABLE IF NOT EXISTS Sponsor (
-    Sponsor_ID INT PRIMARY KEY,
+    Sponsor_ID INT PRIMARY KEY AUTO_INCREMENT,
     Sponsor_Name VARCHAR(255),
     Create_At DATETIME
 );
 
 CREATE TABLE IF NOT EXISTS Speaker (
-    Speaker_ID INT PRIMARY KEY,
+    Speaker_ID INT PRIMARY KEY AUTO_INCREMENT,
     Speaker_Name VARCHAR(255),
     Created_At DATETIME
 );

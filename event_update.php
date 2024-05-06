@@ -69,13 +69,16 @@ if (isset($_GET["event_id"])) {
 <body>
     <header>
         <h1>Academic Event Management</h1>
-        <nav>
-            <ul>
-                <li><a href="dashboard.php">Dashboard</a></li>
-                <li><a href="create_event">Create Event</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
-        </nav>
+            <nav class="navbar">
+                <ul class="navbar-left">
+                    <li><a href="dashboard.php">Dashboard</a></li>
+                    <li><a href="create_event.php">Create Event</a></li>
+                </ul>
+
+                <ul class="navbar-right">
+                    <li><a href="logout.php">Logout</a></li>
+                </ul>
+            </nav>
     </header>
 
     <main>
