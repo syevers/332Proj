@@ -10,13 +10,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone_number = $_POST["phone_number"];
     $role = $_POST["role"];
 
-    // Validate password
-    // fix this
-    //  
-    if (!preg_match('/^(?=.*\d).{6,}$/', $password)) {
-        $error = "Password does not meet the requirements. Must be 6 characters and 1 number.";
+    // Check if the email already exists in the database
+    $check_email_sql = "SELECT * FROM User WHERE Email = '$email'";
+    $check_email_result = $conn->query($check_email_sql);
+
+    if ($check_email_result->num_rows > 0) {
+        $error = "Email already exists. Please use a different email.";
     } else {
-    // Insert user into the database
+        // Insert user into the database
         $sql = "INSERT INTO User (Email, Password, F_Name, LName, Phone_Number, Role, Created_At)
                 VALUES ('$email', '$password', '$first_name', '$last_name', '$phone_number', '$role', NOW())";
 

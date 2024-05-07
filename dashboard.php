@@ -40,9 +40,9 @@ $name = $_SESSION["f_name"]
     </header>
 
     <main>
-        <h2>Dashboard</h2>
+    <h2><?php echo $name; ?>&apos;s Dashboard </h2>
         <!--<p>Welcome, <?php echo $_SESSION["user_id"]; ?>!</p>-->
-        <p>Welcome, <?php echo $name; ?>!</p>
+        <p>Welcome to AEM!</p>
         <p>Your role is: <?php echo $role; ?></p>
     </main>
 
