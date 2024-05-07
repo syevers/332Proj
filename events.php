@@ -285,6 +285,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         echo "<p><strong>Attendee Count:</strong> " . $attendee_count . "</p>";
 
+                        echo "<p><strong>Status:</strong> " . $event['Status'] . "</p>";
                         if ($event['Status'] == 'Cancelled') {
                              echo "<p style='color: red;'><strong>This event is cancelled. Enrollment is not available.</strong></p>";
                            } elseif ($event['Status'] == 'Full') {
@@ -302,7 +303,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     } else {
                         echo "<p><strong>Attendee Count:</strong> " . $event['Attendee_Count'] . "</p>";
                     }
-                    echo "<p><strong>Status:</strong> " . $event['Status'] . "</p>";
 
                     echo "</div>";
                 }
