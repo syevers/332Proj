@@ -65,4 +65,31 @@ function getAttendeeCount($conn, $event_id) {
     $row = $result->fetch_assoc();
     return $row['attendee_count'];
 }
+
+function getEventPresenters($conn, $event_id) {
+    $sql = "SELECT p.Presenter_Name
+            FROM Presenter p
+            JOIN Presenter_Event pe ON p.Presenter_ID = pe.Presenter_ID
+            WHERE pe.Event_ID = $event_id";
+    $result = $conn->query($sql);
+    return $result;
+}
+
+function getEventSpeakers($conn, $event_id) {
+    $sql = "SELECT s.Speaker_Name
+            FROM Speaker s
+            JOIN Speaker_Event se ON s.Speaker_ID = se.Speaker_ID
+            WHERE se.Event_ID = $event_id";
+    $result = $conn->query($sql);
+    return $result;
+}
+
+function getEventSponsors($conn, $event_id) {
+    $sql = "SELECT s.Sponsor_Name
+            FROM Sponsor s
+            JOIN Sponsor_Event se ON s.Sponsor_ID = se.Sponsor_ID
+            WHERE se.Event_ID = $event_id";
+    $result = $conn->query($sql);
+    return $result;
+}
 ?>

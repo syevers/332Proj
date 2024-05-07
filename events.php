@@ -145,6 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $search_result = searchEvents($conn, $search_name, $event_type, $university, $start_date);
             if ($search_result->num_rows > 0) {
                 while ($event = $search_result->fetch_assoc()) {
+
                     echo "<div class='event'>";
                     echo "<h4>" . $event['Event_Name'] . "</h4>";
                     echo "<p><strong>Event Type:</strong> " . getEventTypeName($conn, $event['Event_Type_ID']) . "</p>";
@@ -157,6 +158,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo "<p><strong>University:</strong> " . $event['U_Name'] . "</p>";
                     echo "<p><strong>Physical Address:</strong> " . $event['Street_Address'] . ", " . $event['City'] . ", " . $event['State'] . " " . $event['Zip_Code'] . "</p>";
                     echo "<p><strong>Status:</strong> " . $event['Status'] . "</p>";
+
+                    // Display the list of Presenters
+                    echo "<p><strong>Presenters:</strong></p>";
+                    echo "<ul>";
+                    $presenters = getEventPresenters($conn, $event['Event_ID']);
+                    while ($presenter = $presenters->fetch_assoc()) {
+                        echo "<li>" . $presenter['Presenter_Name'] . "</li>";
+                    }
+                    echo "</ul>";
+
+                    // Display the list of Keynote Speakers
+                    echo "<p><strong>Keynote Speakers:</strong></p>";
+                    echo "<ul>";
+                    $speakers = getEventSpeakers($conn, $event['Event_ID']);
+                    while ($speaker = $speakers->fetch_assoc()) {
+                        echo "<li>" . $speaker['Speaker_Name'] . "</li>";
+                    }
+                    echo "</ul>";
+
+                    // Display the list of Sponsors
+                    echo "<p><strong>Sponsors:</strong></p>";
+                    echo "<ul>";
+                    $sponsors = getEventSponsors($conn, $event['Event_ID']);
+                    while ($sponsor = $sponsors->fetch_assoc()) {
+                        echo "<li>" . $sponsor['Sponsor_Name'] . "</li>";
+                    }
+                    echo "</ul>";
+
+
 
                     if (isset($_SESSION["user_id"])) {
                         $user_id = $_SESSION["user_id"];
