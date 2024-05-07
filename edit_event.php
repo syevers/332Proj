@@ -35,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $event_type = $_POST["event_type"];
     $is_published = isset($_POST["is_published"]) ? 1 : 0;
     $publish_datetime = $_POST["publish_datetime"];
+    $is_canceled = isset($_POST["is_canceled"]) ? 'Cancelled' : 'Open';
     
     // Retrieve location details
     $venue = $_POST["venue"];
@@ -42,6 +43,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $city = $_POST["city"];
     $state = $_POST["state"];
     $zip_code = $_POST["zip_code"];
+
+    if (isset($_POST["delete_event"])) {
+        // Delete associated records from user_event table
+        $delete_user_event_sql = "DELETE FROM User_Event WHERE Event_ID = $event_id";
+        if ($conn->query($delete_user_event_sql) === TRUE) {
+            // Delete the event from the database
+            $delete_sql = "DELETE FROM `Event` WHERE Event_ID = $event_id AND U_ID = $organizer_id";
+            if ($conn->query($delete_sql) === TRUE) {
+                $_SESSION['success'] = "Event deleted successfully.";
+                header("Location: organizer_events.php");
+                exit();
+            } else {
+                $error = "Error deleting event: " . $conn->error;
+            }
+        } else {
+            $error = "Error deleting associated records: " . $conn->error;
+        }
+    }
 
     // Update the location in the database
     $location_sql = "UPDATE Location 
@@ -52,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $update_sql = "UPDATE `Event`
                        SET Event_Name = '$event_name', Description = '$description', Start_Date_Time = '$start_datetime', End_Date_Time = '$end_datetime',
                            Max_Capacity = $max_capacity, Presenter_Deadline = '$presenter_deadline', Event_Type_ID = $event_type,
-                           Is_Published = $is_published, F_Date_Time = '$publish_datetime'
+                           Is_Published = $is_published, F_Date_Time = '$publish_datetime', Status = '$is_canceled'
                        WHERE Event_ID = $event_id AND U_ID = $organizer_id";
 
         if ($conn->query($update_sql) === TRUE) {
@@ -66,6 +85,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Error updating location: " . $conn->error;
     }
 }
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -151,13 +173,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label for="zip_code">ZIP Code:</label>
             <input type="text" id="zip_code" name="zip_code" value="<?php echo $location['Zip_Code']; ?>" required>
 
-            <label for="is_published">Publish Event:</label>
-            <input type="checkbox" id="is_published" name="is_published" <?php if ($event['Is_Published']) echo 'checked'; ?>>
+            <label for="is_published">Publish Event:
+            <input type="checkbox" id="is_published" name="is_published" <?php if ($event['Is_Published']) echo 'checked'; ?>></label>
 
             <label for="publish_datetime">Publish Date & Time:</label>
             <input type="datetime-local" id="publish_datetime" name="publish_datetime" value="<?php echo $event['F_Date_Time']; ?>">
 
+            <h4>
+            <label for="is_canceled">Cancel Event:
+            <input type="checkbox" id="is_canceled" name="is_canceled" <?php if ($event['Status'] == 'Cancelled') echo 'checked'; ?>></label></h4>
+
             <button type="submit">Update Event</button>
+
+            <button type="submit" name="delete_event">Delete Event</button>
         </form>
     </main>
 

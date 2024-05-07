@@ -83,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </select>
             <p>Search by Date</p>
             <input type="date" name="start_date" value="<?php echo $start_date; ?>">
-            <br><button type="submit">Search</button></br>
+            <p><br><button type="submit">Search</button></br></p>
         </form>
 
         <?php
@@ -106,23 +106,64 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "<p>No users found who create 10+ events.</p>";
             }
         } elseif ($view_filter == 'events_with_100_plus_attendees') {
-            $search_result = getEventsWith100PlusAttendees($conn);
-            if ($search_result->num_rows > 0) {
-                echo "<h3>Events with 100+ Attendees</h3>";
-                while ($event = $search_result->fetch_assoc()) {
-                    echo "<div class='event'>";
-                    echo "<h4>" . $event['Event_Name'] . "</h4>";
-                    echo "<p><strong>Event Type:</strong> " . getEventTypeName($conn, $event['Event_Type_ID']) . "</p>";
-                    echo "<p><strong>Description:</strong> " . $event['Description'] . "</p>";
-                    echo "<p><strong>Start Date & Time:</strong> " . date('m/d/Y h:i A', strtotime($event['Start_Date_Time'])) . "</p>";
-                    echo "<p><strong>End Date & Time:</strong> " . date('m/d/Y h:i A', strtotime($event['End_Date_Time'])) . "</p>";
-                    echo "<p><strong>Maximum Capacity:</strong> " . $event['Max_Capacity'] . "</p>";
-                    echo "<p><strong>Presenter's Abstract Submission Deadline:</strong> " . date('m/d/Y h:i A', strtotime($event['Presenter_Deadline'])) . "</p>";
-                    echo "</div>";
-                }
+                $search_result = getEventsWith100PlusAttendees($conn);
+                if ($search_result->num_rows > 0) {
+                    echo "<h3>Events with 100+ Attendees</h3>";
+                    while ($event = $search_result->fetch_assoc()) {                    
+                        echo "<div class='event'>";
+                        echo "<h4>" . $event['Event_Name'] . "</h4>";
+                        echo "<p><strong>Event Type:</strong> " . getEventTypeName($conn, $event['Event_Type_ID']) . "</p>";
+                        echo "<p><strong>Description:</strong> " . $event['Description'] . "</p>";
+                        echo "<p><strong>Start Date & Time:</strong> " . date('m/d/Y h:i A', strtotime($event['Start_Date_Time'])) . "</p>";
+                        echo "<p><strong>End Date & Time:</strong> " . date('m/d/Y h:i A', strtotime($event['End_Date_Time'])) . "</p>";
+                        echo "<p><strong>Maximum Capacity:</strong> " . $event['Max_Capacity'] . "</p>";
+                        echo "<p><strong>Presenter's Abstract Submission Deadline:</strong> " . date('m/d/Y h:i A', strtotime($event['Presenter_Deadline'])) . "</p>";
+                        echo "<p><strong>Venue:</strong> " . $event['Venue'] . "</p>";
+                        echo "<p><strong>University:</strong> " . $event['U_Name'] . "</p>";
+                        echo "<p><strong>Physical Address:</strong> " . $event['Street_Address'] . ", " . $event['City'] . ", " . $event['State'] . " " . $event['Zip_Code'] . "</p>";
+
+                        echo "<p><strong>Presenters:</strong></p>";
+                        echo "<ul>";
+                        $presenters = getEventPresenters($conn, $event['Event_ID']);
+                        while ($presenter = $presenters->fetch_assoc()) {
+                            echo "<li>" . $presenter['Presenter_Name'] . "</li>";
+                        }
+                        echo "</ul>";
+
+                        echo "<p><strong>Keynote Speakers:</strong></p>";
+                        echo "<ul>";
+                        $speakers = getEventSpeakers($conn, $event['Event_ID']);
+                        while ($speaker = $speakers->fetch_assoc()) {
+                            echo "<li>" . $speaker['Speaker_Name'] . "</li>";
+                        }
+                        echo "</ul>";
+
+                        echo "<p><strong>Sponsors:</strong></p>";
+                        echo "<ul>";
+                        $sponsors = getEventSponsors($conn, $event['Event_ID']);
+                        while ($sponsor = $sponsors->fetch_assoc()) {
+                            echo "<li>" . $sponsor['Sponsor_Name'] . "</li>";
+                        }
+                        echo "</ul>";
+
+                        echo "<p><strong>Attendee Count:</strong> " . $event['Attendee_Count'] . "</p>";
+                        echo "<p><strong>Status:</strong> " . $event['Status'] . "</p>";
+
+                        if ($event['Status'] == 'Cancelled') {
+                            echo "<p style='color: red;'><strong>This event is cancelled. Enrollment is not available.</strong></p>";
+                        } elseif ($event['Status'] == 'Full') {
+                            echo "<p style='color: red;'><strong>This event is full. Enrollment is not available.</strong></p>";
+                        } elseif ($event['Status'] == 'Closed') {
+                            echo "<p style='color: red;'><strong>This event is closed. Enrollment is not available.</strong></p>";
+                        }
+
+                        echo "</div>";
+                    }
+
             } else {
                 echo "<p>No events found with 100+ attendees.</p>";
             }
+
         } elseif ($view_filter == 'closed_or_canceled_events') {
             $search_result = getClosedOrCanceledEvents($conn);
             if ($search_result->num_rows > 0) {
@@ -136,8 +177,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo "<p><strong>End Date & Time:</strong> " . date('m/d/Y h:i A', strtotime($event['End_Date_Time'])) . "</p>";
                     echo "<p><strong>Maximum Capacity:</strong> " . $event['Max_Capacity'] . "</p>";
                     echo "<p><strong>Presenter's Abstract Submission Deadline:</strong> " . date('m/d/Y h:i A', strtotime($event['Presenter_Deadline'])) . "</p>";
+                    echo "<p><strong>Venue:</strong> " . $event['Venue'] . "</p>";
+                    echo "<p><strong>University:</strong> " . $event['U_Name'] . "</p>";
+                    echo "<p><strong>Physical Address:</strong> " . $event['Street_Address'] . ", " . $event['City'] . ", " . $event['State'] . " " . $event['Zip_Code'] . "</p>";
+
+                    echo "<p><strong>Presenters:</strong></p>";
+                    echo "<ul>";
+                    $presenters = getEventPresenters($conn, $event['Event_ID']);
+                    while ($presenter = $presenters->fetch_assoc()) {
+                        echo "<li>" . $presenter['Presenter_Name'] . "</li>";
+                    }
+                    echo "</ul>";
+
+                    echo "<p><strong>Keynote Speakers:</strong></p>";
+                    echo "<ul>";
+                    $speakers = getEventSpeakers($conn, $event['Event_ID']);
+                    while ($speaker = $speakers->fetch_assoc()) {
+                        echo "<li>" . $speaker['Speaker_Name'] . "</li>";
+                    }
+                    echo "</ul>";
+
+                    echo "<p><strong>Sponsors:</strong></p>";
+                    echo "<ul>";
+                    $sponsors = getEventSponsors($conn, $event['Event_ID']);
+                    while ($sponsor = $sponsors->fetch_assoc()) {
+                        echo "<li>" . $sponsor['Sponsor_Name'] . "</li>";
+                    }
+                    echo "</ul>";
+
+                    echo "<p><strong>Attendee Count:</strong> " . $event['Attendee_Count'] . "</p>";
+                    echo "<p><strong>Status:</strong> " . $event['Status'] . "</p>";
+
+                    if ($event['Status'] == 'Cancelled') {
+                        echo "<p style='color: red;'><strong>This event is cancelled. Enrollment is not available.</strong></p>";
+                    } elseif ($event['Status'] == 'Full') {
+                        echo "<p style='color: red;'><strong>This event is full. Enrollment is not available.</strong></p>";
+                    } elseif ($event['Status'] == 'Closed') {
+                        echo "<p style='color: red;'><strong>This event is closed. Enrollment is not available.</strong></p>";
+                    }
+
                     echo "</div>";
                 }
+
+
+
+
+
+
+
+
+
+
             } else {
                 echo "<p>No closed or canceled events found.</p>";
             }
@@ -157,7 +247,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo "<p><strong>Venue:</strong> " . $event['Venue'] . "</p>";
                     echo "<p><strong>University:</strong> " . $event['U_Name'] . "</p>";
                     echo "<p><strong>Physical Address:</strong> " . $event['Street_Address'] . ", " . $event['City'] . ", " . $event['State'] . " " . $event['Zip_Code'] . "</p>";
-                    echo "<p><strong>Status:</strong> " . $event['Status'] . "</p>";
 
                     // Display the list of Presenters
                     echo "<p><strong>Presenters:</strong></p>";
@@ -195,13 +284,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $is_enrolled = isUserEnrolled($conn, $user_id, $event_id);
 
                         echo "<p><strong>Attendee Count:</strong> " . $attendee_count . "</p>";
-                        echo "<form action='enroll_event.php' method='POST'>";
-                        echo "<input type='hidden' name='event_id' value='$event_id'>";
-                        echo "<button type='submit' name='enroll_unenroll'>" . ($is_enrolled ? 'Unenroll' : 'Enroll') . "</button>";
-                        echo "</form>";
+
+                        if ($event['Status'] == 'Cancelled') {
+                             echo "<p style='color: red;'><strong>This event is cancelled. Enrollment is not available.</strong></p>";
+                           } elseif ($event['Status'] == 'Full') {
+                               echo "<p style='color: red;'><strong>This event is full. Enrollment is not available.</strong></p>";
+                           } elseif ($event['Status'] == 'Closed') {
+                               echo "<p style='color: red;'><strong>This event is closed. Enrollment is not available.</strong></p>";
+                           } else {
+
+                               echo "<form action='enroll_event.php' method='POST'>";
+                               echo "<input type='hidden' name='event_id' value='$event_id'>";
+                               echo "<button type='submit' name='enroll_unenroll'>" . ($is_enrolled ? 'Unenroll' : 'Enroll') . "</button>";
+                               echo "</form>";
+                           } 
+
                     } else {
                         echo "<p><strong>Attendee Count:</strong> " . $event['Attendee_Count'] . "</p>";
                     }
+                    echo "<p><strong>Status:</strong> " . $event['Status'] . "</p>";
 
                     echo "</div>";
                 }

@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `Event` (
     Created_At DATETIME,
     Is_Published BOOLEAN,
     Description TEXT,
-    Status ENUM('Open', 'Full', 'Cancelled') DEFAULT 'Open',
+    Status ENUM('Open', 'Full', 'Closed', 'Cancelled') DEFAULT 'Open',
     FOREIGN KEY (Event_Type_ID) REFERENCES Event_Type(Event_Type_ID),
     FOREIGN KEY (Location_ID) REFERENCES Location(Location_ID),
     FOREIGN KEY (U_ID) REFERENCES U(U_ID)
