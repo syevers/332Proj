@@ -20,7 +20,18 @@ VALUES
 ('University of Illinois at Urbana-Champaign', NOW()),
 ('University of Wisconsin-Madison', NOW()),
 ('University of Texas at Austin', NOW()),
-('University of California, San Diego', NOW());
+('University of California, San Diego', NOW()),
+('Duke University', NOW()),
+('Northwestern University', NOW()),
+('Johns Hopkins University', NOW()),
+('University of Michigan', NOW()),
+('New York University', NOW()),
+('Carnegie Mellon University', NOW()),
+('University of Southern California', NOW()),
+('University of North Carolina at Chapel Hill', NOW()),
+('University of Virginia', NOW()),
+('Brown University', NOW()),
+('Vanderbilt University', NOW());
 
 -- Insert sample data into Location table
 INSERT INTO Location (Venue, Street_Address, City, State, Zip_Code)
@@ -44,7 +55,18 @@ VALUES
 ('Memorial Union', '800 Langdon St', 'Madison', 'WI', '53706'),
 ('Hogg Memorial Auditorium', '2300 Whitis Ave', 'Austin', 'TX', '78712'),
 ('Price Center Theater', '9500 Gilman Dr', 'La Jolla', 'CA', '92093'),
-('Sanders Theatre', '45 Quincy St', 'Cambridge', 'MA', '02138');
+('Sanders Theatre', '45 Quincy St', 'Cambridge', 'MA', '02138'),
+('Lincoln Center', '10 Lincoln Center Plaza', 'New York', 'NY', '10023'),
+('Sydney Opera House', 'Bennelong Point', 'Sydney', 'NSW', '2000'),
+('Royal Albert Hall', 'Kensington Gore', 'London', 'England', 'SW7 2AP'),
+('Teatro Colón', 'Cerrito 628', 'Buenos Aires', 'Buenos Aires', 'C1012AAO'),
+('Konzerthaus Berlin', 'Gendarmenmarkt', 'Berlin', 'Berlin', '10117'),
+('Esplanade Concert Hall', '1 Esplanade Dr', 'Singapore', 'Singapore', '038981'),
+('Suntory Hall', '1-13-1 Akasaka', 'Minato', 'Tokyo', '107-8403'),
+('Louise M. Davies Symphony Hall', '201 Van Ness Ave', 'San Francisco', 'CA', '94102'),
+('Elbphilharmonie', 'Platz der Deutschen Einheit 1', 'Hamburg', 'Hamburg', '20457'),
+('Concertgebouw', 'Concertgebouwplein 10', 'Amsterdam', 'North Holland', '1071 LN'),
+('Musikverein', 'Musikvereinsplatz 1', 'Vienna', 'Vienna', '1010');
 
 -- Insert sample data into Event_Type table
 INSERT INTO Event_Type (Type_Name, Created_At)
@@ -54,19 +76,20 @@ VALUES
 ('Online', NOW());
 
 -- Insert sample data into Event table
+
 INSERT INTO `Event` (Event_Type_ID, Location_ID, U_ID, Start_Date_Time, End_Date_Time, Max_Capacity, Presenter_Deadline, Event_Name, F_Date_Time, Created_At, Is_Published, Description, Status)
 VALUES
-(1, 1, 2, '2024-02-15 09:00:00', '2024-02-17 18:00:00', 500, '2024-01-31 23:59:59', 'Artificial Intelligence Conference', '2024-02-15 08:00:00', NOW(), 1, 'Explore the latest advancements in AI and machine learning.', 'Open'),
-(2, 2, 3, '2024-03-10 10:00:00', '2024-03-10 16:00:00', 100, '2024-02-28 23:59:59', 'Data Science Workshop', '2024-03-10 09:30:00', NOW(), 1, 'Learn practical data science techniques and tools.', 'Open'),
-(3, 3, 4, '2024-03-20 14:00:00', '2024-03-20 17:00:00', 200, '2024-03-10 23:59:59', 'Quantum Computing Seminar', '2024-03-20 13:30:00', NOW(), 1, 'Discover the potential of quantum computing.', 'Open'),
-(1, 4, 5, '2024-04-05 11:00:00', '2024-04-07 18:00:00', 300, '2024-03-20 23:59:59', 'Neuroscience Symposium', '2024-04-05 10:00:00', NOW(), 1, 'Explore the latest findings in neuroscience research.', 'Open'),
-(2, 5, 6, '2024-04-15 13:00:00', '2024-04-15 16:00:00', 150, '2024-04-05 23:59:59', 'Robotics Forum', '2024-04-15 12:30:00', NOW(), 1, 'Discuss the challenges and opportunities in robotics.', 'Open'),
-(3, 6, 7, '2024-04-25 15:00:00', '2024-04-25 18:00:00', 120, '2024-04-15 23:59:59', 'Climate Change Panel Discussion', '2024-04-25 14:30:00', NOW(), 1, 'Explore strategies for combating climate change.', 'Full'),
-(1, 7, 8, '2024-05-05 10:00:00', '2024-05-05 12:00:00', 80, '2024-04-25 23:59:59', 'Astrophysics Lecture', '2024-05-05 09:30:00', NOW(), 1, 'Learn about the latest discoveries in astrophysics.', 'Open'),
-(2, 8, 9, '2024-05-15 09:00:00', '2024-05-17 17:00:00', 250, '2024-04-30 23:59:59', 'Cybersecurity Training', '2024-05-15 08:30:00', NOW(), 1, 'Gain practical skills in cybersecurity.', 'Open'),
-(3, 9, 10, '2024-05-25 18:00:00', '2024-05-25 21:00:00', 100, '2024-05-15 23:59:59', 'Networking Event for Entrepreneurs', '2024-05-25 17:30:00', NOW(), 1, 'Connect with fellow entrepreneurs and investors.', 'Open'),
-(1, 10, 11, '2024-06-05 10:00:00', '2024-06-07 18:00:00', 400, '2024-05-20 23:59:59', 'Biomedical Engineering Exhibition', '2024-06-05 09:00:00', NOW(), 1, 'Showcase the latest biomedical engineering technologies.', 'Open'),
-(2, 11, 12, '2024-06-15 11:00:00', '2024-06-17 16:00:00', 200, '2024-05-31 23:59:59', 'Software Development Trade Show', '2024-06-15 10:00:00', NOW(), 1, 'Explore the latest tools and trends in software development.', 'Full'),
+(1, 1, 1, '2024-02-15 09:00:00', '2024-02-17 18:00:00', 101, '2024-01-31 23:59:59', 'Artificial Intelligence Conference', '2024-02-15 08:00:00', NOW(), 1, 'Explore the latest advancements in AI and machine learning.', 'Full'),
+(2, 2, 1, '2024-03-10 10:00:00', '2024-03-10 16:00:00', 100, '2024-02-28 23:59:59', 'Data Science Workshop', '2024-03-10 09:30:00', NOW(), 1, 'Learn practical data science techniques and tools.', 'Open'),
+(3, 3, 1, '2024-03-20 14:00:00', '2024-03-20 17:00:00', 200, '2024-03-10 23:59:59', 'Quantum Computing Seminar', '2024-03-20 13:30:00', NOW(), 1, 'Discover the potential of quantum computing.', 'Open'),
+(1, 4, 1, '2024-04-05 11:00:00', '2024-04-07 18:00:00', 300, '2024-03-20 23:59:59', 'Neuroscience Symposium', '2024-04-05 10:00:00', NOW(), 1, 'Explore the latest findings in neuroscience research.', 'Open'),
+(2, 5, 1, '2024-04-15 13:00:00', '2024-04-15 16:00:00', 150, '2024-04-05 23:59:59', 'Robotics Forum', '2024-04-15 12:30:00', NOW(), 1, 'Discuss the challenges and opportunities in robotics.', 'Open'),
+(3, 6, 1, '2024-04-25 15:00:00', '2024-04-25 18:00:00', 120, '2024-04-15 23:59:59', 'Climate Change Panel Discussion', '2024-04-25 14:30:00', NOW(), 1, 'Explore strategies for combating climate change.', 'Full'),
+(1, 7, 1, '2024-05-05 10:00:00', '2024-05-05 12:00:00', 80, '2024-04-25 23:59:59', 'Astrophysics Lecture', '2024-05-05 09:30:00', NOW(), 1, 'Learn about the latest discoveries in astrophysics.', 'Open'),
+(2, 8, 1, '2024-05-15 09:00:00', '2024-05-17 17:00:00', 250, '2024-04-30 23:59:59', 'Cybersecurity Training', '2024-05-15 08:30:00', NOW(), 1, 'Gain practical skills in cybersecurity.', 'Closed'),
+(3, 9, 1, '2024-05-25 18:00:00', '2024-05-25 21:00:00', 100, '2024-05-15 23:59:59', 'Networking Event for Entrepreneurs', '2024-05-25 17:30:00', NOW(), 1, 'Connect with fellow entrepreneurs and investors.', 'Open'),
+(1, 10, 1, '2024-06-05 10:00:00', '2024-06-07 18:00:00', 400, '2024-05-20 23:59:59', 'Biomedical Engineering Exhibition', '2024-06-05 09:00:00', NOW(), 1, 'Showcase the latest biomedical engineering technologies.', 'Open'),
+(2, 11, 12, '2024-06-15 11:00:00', '2024-06-17 16:00:00', 200, '2024-05-31 23:59:59', 'Software Development Trade Show', '2024-06-15 10:00:00', NOW(), 1, 'Explore the latest tools and trends in software development.', 'Open'),
 (3, 12, 13, '2024-06-25 14:00:00', '2024-06-25 16:00:00', 150, '2024-06-10 23:59:59', 'Electric Vehicle Product Launch', '2024-06-25 13:30:00', NOW(), 1, 'Witness the unveiling of a revolutionary electric vehicle.', 'Open'),
 (1, 13, 14, '2024-07-05 09:00:00', '2024-07-07 18:00:00', 120, '2024-06-20 23:59:59', 'Sustainability Hackathon', '2024-07-05 08:00:00', NOW(), 1, 'Develop innovative solutions for sustainability challenges.', 'Cancelled'),
 (2, 14, 15, '2024-07-15 15:00:00', '2024-07-15 17:00:00', 500, '2024-07-05 23:59:59', 'Renewable Energy Webinar', '2024-07-15 14:30:00', NOW(), 1, 'Learn about the latest advancements in renewable energy.', 'Open'),
@@ -295,7 +318,18 @@ VALUES
 ('Dr. Harper Clark', NOW()),
 ('Prof. Alexander Lewis', NOW()),
 ('Dr. Scarlett Rodriguez', NOW()),
-('Prof. Daniel Lee', NOW());
+('Prof. Jake Garcia', NOW()),
+('Dr. Daniel Martinez', NOW()),
+('Prof. Mark Robinson', NOW()),
+('Dr. Jou Clark', NOW()),
+('Prof. John Lewis', NOW()),
+('Dr. Frank Rodriguez', NOW()),
+('Prof. Daniel Dark', NOW()),
+('Dr. Son Park', NOW()),
+('Mark Zuckerberg', NOW()),
+('Dr. Joe Baker', NOW()),
+('Dr. Zull Stevenson', NOW()),
+('Dr. Christian Mendoza', NOW());
 
 -- Insert sample data into Sponsor table
 INSERT INTO Sponsor (Sponsor_Name, Create_At)
@@ -319,7 +353,18 @@ VALUES
 ('Renewable Resources Ltd.', NOW()),
 ('Nanotech Researchers', NOW()),
 ('Space Exploration Ventures', NOW()),
-('Health and Wellness Co.', NOW());
+('Health and Wellness Co.', NOW()),
+('OpenAI Inc.', NOW()),
+('Nordic Aerospace', NOW()),
+('Electric Aviation', NOW()),
+('Data Analysis Inc.', NOW()),
+('Meta', NOW()),
+('Nvidia', NOW()),
+('Celsius Solutions', NOW()),
+('Apollo Aviation', NOW()),
+('Yamaha Engineering', NOW()),
+('Steinberg Inc.', NOW()),
+('ASUS', NOW());
 
 -- Insert sample data into Speaker table
 INSERT INTO Speaker (Speaker_Name, Created_At)
@@ -343,7 +388,18 @@ VALUES
 ('Dr. Harper Lewis', NOW()),
 ('Prof. Scarlett Rodriguez', NOW()),
 ('Dr. Daniel Lee', NOW()),
-('Prof. Samantha Johnson', NOW());
+('Prof. Samantha Johnson', NOW()),
+('Steve Jobs', NOW()),
+('Perry Prada', NOW()),
+('Bill Gates', NOW()),
+('Prince Charles', NOW()),
+('Prof. Steven Mouch', NOW()),
+('Dr. John Deer', NOW()),
+('Jack Dorsey', NOW()),
+('Elon Musk', NOW()),
+('Prof. Daniel Johnston', NOW()),
+('Prof. Dat Vo', NOW()),
+('Dr. Sunhar Fisk', NOW());
 
 -- Insert sample data into User_Event table
 INSERT INTO User_Event (User_ID, Event_ID, Created_At)
@@ -491,8 +547,18 @@ VALUES
 (17, 9, NOW()),
 (18, 9, NOW()),
 (19, 10, NOW()),
-(20, 10, NOW());
-
+(20, 10, NOW()),
+(21, 11, NOW()),
+(22, 11, NOW()),
+(23, 12, NOW()),
+(24, 12, NOW()),
+(25, 13, NOW()),
+(26, 13, NOW()),
+(27, 14, NOW()),
+(28, 14, NOW()),
+(29, 15, NOW()),
+(30, 15, NOW()),
+(31, 16, NOW());
 -- Insert sample data into Speaker_Event table
 INSERT INTO Speaker_Event (Speaker_ID, Event_ID, Created_At)
 VALUES
@@ -515,7 +581,18 @@ VALUES
 (17, 9, NOW()),
 (18, 9, NOW()),
 (19, 10, NOW()),
-(20, 10, NOW());
+(20, 10, NOW()),
+(21, 11, NOW()),
+(22, 11, NOW()),
+(23, 12, NOW()),
+(24, 12, NOW()),
+(25, 13, NOW()),
+(26, 13, NOW()),
+(27, 14, NOW()),
+(28, 14, NOW()),
+(29, 15, NOW()),
+(30, 15, NOW()),
+(31, 16, NOW());
 -- Insert sample data into Sponsor_Event table
 INSERT INTO Sponsor_Event (Sponsor_ID, Event_ID, Created_At)
 VALUES
@@ -538,4 +615,15 @@ VALUES
 (17, 9, NOW()),
 (18, 9, NOW()),
 (19, 10, NOW()),
-(20, 10, NOW());
+(20, 10, NOW()),
+(21, 11, NOW()),
+(22, 11, NOW()),
+(23, 12, NOW()),
+(24, 12, NOW()),
+(25, 13, NOW()),
+(26, 13, NOW()),
+(27, 14, NOW()),
+(28, 14, NOW()),
+(29, 15, NOW()),
+(30, 15, NOW()),
+(31, 16, NOW());

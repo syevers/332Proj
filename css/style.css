@@ -1,10 +1,10 @@
 /* Reset default browser styles */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 
 body {
     font-family: Arial, sans-serif;
@@ -167,7 +167,7 @@ th {
 footer {
     background-color: #1a237e;
     color: #fff;
-    padding: 20px;
+    padding: 10px;
     text-align: center;
     position: fixed;
     left: 0;

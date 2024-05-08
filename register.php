@@ -39,12 +39,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <header>
         <h1>Academic Event Management</h1>
-        <nav>
-            <ul>
+          <nav class="navbar">
+            <ul class="navbar-left">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="events.php">Events</a></li>
+            </ul>
+
+            <ul class="navbar-right">
                 <li><a href="login.php">Login</a></li>
-                <li><a href="register.php">Register</a></li>
             </ul>
         </nav>
     </header>
