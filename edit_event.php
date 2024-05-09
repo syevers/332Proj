@@ -48,20 +48,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Delete associated records from user_event table
         $delete_user_event_sql = "DELETE FROM User_Event WHERE Event_ID = $event_id";
         if ($conn->query($delete_user_event_sql) === TRUE) {
-            // Delete the event from the database
-            $delete_sql = "DELETE FROM `Event` WHERE Event_ID = $event_id AND U_ID = $organizer_id";
-            if ($conn->query($delete_sql) === TRUE) {
-                $_SESSION['success'] = "Event deleted successfully.";
-                header("Location: organizer_events.php");
-                exit();
+            // Delete associated records from presenter_event table
+            $delete_presenter_event_sql = "DELETE FROM Presenter_Event WHERE Event_ID = $event_id";
+            if ($conn->query($delete_presenter_event_sql) === TRUE) {
+                // Delete associated records from speaker_event table
+                $delete_speaker_event_sql = "DELETE FROM Speaker_Event WHERE Event_ID = $event_id";
+                if ($conn->query($delete_speaker_event_sql) === TRUE) {
+                    // Delete associated records from sponsor_event table
+                    $delete_sponsor_event_sql = "DELETE FROM Sponsor_Event WHERE Event_ID = $event_id";
+                    if ($conn->query($delete_sponsor_event_sql) === TRUE) {
+                        // Delete the event from the database
+                        $delete_sql = "DELETE FROM `Event` WHERE Event_ID = $event_id AND U_ID = $organizer_id";
+                        if ($conn->query($delete_sql) === TRUE) {
+                            $_SESSION['success'] = "Event deleted successfully.";
+                            header("Location: organizer_events.php");
+                            exit();
+                        } else {
+                            $error = "Error deleting event: " . $conn->error;
+                        }
+                    } else {
+                        $error = "Error deleting associated sponsor records: " . $conn->error;
+                    }
+                } else {
+                    $error = "Error deleting associated speaker records: " . $conn->error;
+                }
             } else {
-                $error = "Error deleting event: " . $conn->error;
+                $error = "Error deleting associated presenter records: " . $conn->error;
             }
         } else {
-            $error = "Error deleting associated records: " . $conn->error;
+            $error = "Error deleting associated user records: " . $conn->error;
         }
     }
-
     // Update the location in the database
     $location_sql = "UPDATE Location 
                      SET Venue = '$venue', Street_Address = '$street_address', City = '$city', State = '$state', Zip_Code = '$zip_code'
@@ -185,7 +202,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <button type="submit">Update Event</button>
 
-            <button type="submit" name="delete_event">Delete Event</button>
+            <button id="button-delete" type="submit" name="delete_event">Delete Event</button>
         </form>
     </main>
 

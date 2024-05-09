@@ -118,6 +118,10 @@ button:hover {
     background-color: #3f51b5;
 }
 
+#button-delete {
+    background-color: red;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
