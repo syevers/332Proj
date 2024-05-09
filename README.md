@@ -6,3 +6,6 @@ define('DB_NAME', 'aem');
 
 
 You might need to set 'localhost' to the name of your profile that you're logged into if the database connection is not working.
+
+
+If that doesn't work, create a user account in phpMyAdmin with the username 'localhost' and the host name '127.0.0.1'
