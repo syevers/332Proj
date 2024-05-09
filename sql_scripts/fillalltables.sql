@@ -79,7 +79,7 @@ VALUES
 
 INSERT INTO `Event` (Event_Type_ID, Location_ID, U_ID, Start_Date_Time, End_Date_Time, Max_Capacity, Presenter_Deadline, Event_Name, F_Date_Time, Created_At, Is_Published, Description, Status)
 VALUES
-(1, 1, 1, '2024-02-15 09:00:00', '2024-02-17 18:00:00', 101, '2024-01-31 23:59:59', 'Artificial Intelligence Conference', '2024-02-15 08:00:00', NOW(), 1, 'Explore the latest advancements in AI and machine learning.', 'Full'),
+(1, 1, 1, '2024-02-15 09:00:00', '2024-02-17 18:00:00', 102, '2024-01-31 23:59:59', 'Artificial Intelligence Conference', '2024-02-15 08:00:00', NOW(), 1, 'Explore the latest advancements in AI and machine learning.', 'Full'),
 (2, 2, 1, '2024-03-10 10:00:00', '2024-03-10 16:00:00', 100, '2024-02-28 23:59:59', 'Data Science Workshop', '2024-03-10 09:30:00', NOW(), 1, 'Learn practical data science techniques and tools.', 'Open'),
 (3, 3, 1, '2024-03-20 14:00:00', '2024-03-20 17:00:00', 200, '2024-03-10 23:59:59', 'Quantum Computing Seminar', '2024-03-20 13:30:00', NOW(), 1, 'Discover the potential of quantum computing.', 'Open'),
 (1, 4, 1, '2024-04-05 11:00:00', '2024-04-07 18:00:00', 300, '2024-03-20 23:59:59', 'Neuroscience Symposium', '2024-04-05 10:00:00', NOW(), 1, 'Explore the latest findings in neuroscience research.', 'Open'),
